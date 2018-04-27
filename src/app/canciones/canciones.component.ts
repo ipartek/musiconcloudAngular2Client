@@ -19,12 +19,27 @@ export class CancionesComponent implements OnInit {
     //inicializar atributos
     this.canciones = [];
     this.cancionSeleccionada = new Cancion(-1,"");   
-    this.mockData();
+    //this.mockData();
   }
 
   ngOnInit() {
     console.log('CancionesComponent ngOnInit');
     //llamadas a los servicios
+    this.cancionesService.getAll().subscribe(
+      result=>{
+        console.log('response correcto %o', result);
+        //let cancion: Cancion;
+        result.forEach( element => {
+            
+            this.canciones.push( element );
+        });
+        
+      },
+      error=>{
+        console.warn(error);
+      }
+    );
+
 
   }
 

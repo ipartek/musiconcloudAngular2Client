@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule, HttpClient, HttpHandler } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -9,6 +9,7 @@ import { CancionesComponent } from './canciones/canciones.component';
 
 //services
 import { CancionesService } from './providers/canciones.service';
+
 
 //pipes
 
@@ -19,9 +20,10 @@ import { CancionesService } from './providers/canciones.service';
     CancionesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [
+  providers: [       
     CancionesService
   ],
   bootstrap: [AppComponent]
