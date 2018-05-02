@@ -13,6 +13,7 @@ export class CancionesComponent implements OnInit {
   //canciones
   canciones : Cancion[]; 
   cancionSeleccionada : Cancion;
+  nombreCancion: String;
 
   constructor( private cancionesService: CancionesService) { 
     console.log('CancionesComponent constructor');
@@ -25,26 +26,49 @@ export class CancionesComponent implements OnInit {
   ngOnInit() {
     console.log('CancionesComponent ngOnInit');
     //llamadas a los servicios
+    this.recargar();
+
+  }//ngOnInit
+
+  /**
+   * Recarga las canciones mediante GET
+   */
+  recargar(){
+    console.log('CancionesComponent recargar');
+    this.canciones = [];
     this.cancionesService.getAll().subscribe(
       result=>{
-        console.log('response correcto %o', result);
-        //let cancion: Cancion;
-        result.forEach( element => {
-            
-            this.canciones.push( element );
-        });
-        
+        console.log('    response correcto %o', result);   
+        if ( result != null ){     
+          result.forEach( element => {
+              this.canciones.push( element );
+          });    
+        }      
       },
       error=>{
         console.warn(error);
       }
     );
-
-
   }
+
 
   eliminar( id: number ){
     console.log(`CancionesComponent eliminar ${id}`);
+    if ( confirm("¿ Quieres eliminar la canción ?") ){
+      
+      this.cancionesService.delete(id).subscribe(
+        result=>{
+            this.recargar();
+            console.log(`Cancion Eliminada!!!`);
+        },error=>{
+          console.warn(`Error al eliminar ${error}` );
+        }
+      );
+    }
+  }
+
+  crearCancion(){
+    console.log(`CancionesComponent crearCancion ${this.nombreCancion}`);
   }
 
   mockData(){
